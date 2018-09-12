@@ -1,0 +1,742 @@
+
+
+Podstawy baz danych - ćwiczenie 3
+
+Polecenie SELECT cz 3
+
+ 
+
+Ćwiczenie 1
+
+Wyświetlić dane o pracownikach pracujących w dziale o nazwie Sales. Dla tabel zdeﬁniować aliasy i posługiwać się nimi przy odwoływaniu do kolumn. Jako wynik powinniśmy otrzymać:
+
++------------+-----------+-------+
+
+| first_name | last_name | name  |
+
++------------+-----------+-------+
+
+| Midori     | Nagayama  | Sales |
+
+| Colin      | Magee     | Sales |
+
+| Henry      | Giljum    | Sales |
+
+| Yasmin     | Sedeghi   | Sales |
+
+| Mai        | Nguyen    | Sales |
+
+| Radha      | Patel     | Sales |
+
+| Andre      | Dumas     | Sales |
+
++------------+-----------+-------+
+
+ 
+
+Ćwiczenie 2
+
+Wyświetlić informację o kosztach płacowych w poszczególnych regionach. Zwrócić uwagę na to, że w tabeli dept nazwy działów dublują się (różne są natomiast region id). Zgodność otrzymanego wyniku łatwo jest sprawdzić poprzez zsumowanie odpowiednich (jakich?) liczb uzyskanych w poprzednim ćwiczeniu (zakładając oczywiście, że tam otrzymano poprawny wynik). Jako wynik powinniśmy otrzymać:
+
++----+----------------------+---------------+--------------------+
+
+| id | name                 | Suma zarobków | Liczba pracowników |
+
++----+----------------------+---------------+--------------------+
+
+|  1 | North America        |      13290.00 |                  9 |
+
+|  2 | South America        |       4735.00 |                  4 |
+
+|  3 | Africa / Middle East |       4215.00 |                  4 |
+
+|  4 | Asia                 |       4420.00 |                  4 |
+
+|  5 | Europe               |       4717.00 |                  4 |
+
++----+----------------------+---------------+--------------------+
+
+ 
+
+Ćwiczenie 3
+
+Wyświetlić dane o pracownikach pracujących w regionie o nazwie Europe. Dla tabel zdeﬁniować aliasy i posługiwać się nimi przy odwoływaniu się do kolumn. Jako wynik powinniśmy otrzymać:
+
++------------+-----------+------------+--------+
+
+| first_name | last_name | Dzial      | Region |
+
++------------+-----------+------------+--------+
+
+| Andre      | Dumas     | Sales      | Europe |
+
+| Marta      | Havel     | Operations | Europe |
+
+| Bela       | Dancs     | Operations | Europe |
+
+| Sylvie     | Schwartz  | Operations | Europe |
+
++------------+-----------+------------+--------+
+
+ 
+
+Ćwiczenie 4
+
+Wyświetlić stany magazynowe wszystkich produktów z rozbiciem na poszczególne hurtownie (wymagane dane są w tabelach warehouse, product, inventory, emp). Ograniczamy się tylko do tych produktów, których sprzedaż, czyli różnica wartości pól inventory.max in stock - inventory.amount in stock jest mniejsza niż 10. Dane posortować wg. nazwy hurtowni a  następnie wg. nazwy produktu. Jako wynik powinniśmy otrzymać:
+
++-----------------+----------------------+--------------------------+------------+----------+---------+
+
+| Adres hurt.     | Szef                 | Nazwa produktu           | Stan biez. | Stan max | Roznica |
+
++-----------------+----------------------+--------------------------+------------+----------+---------+
+
+| 283 King Street | Molly Urguhart       | Junior Soccer Ball       |        993 |     1000 |       7 |
+
+| 283 King Street | Molly Urguhart       | Winfield Bat             |        173 |      175 |       2 |
+
+| 68 Via Centrale | Roberta Menchu       | Alomar Glove             |         98 |      100 |       2 |
+
+| 68 Via Centrale | Roberta Menchu       | Black Hawk Knee Pads     |        175 |      175 |       0 |
+
+| 68 Via Centrale | Roberta Menchu       | Safe-T Helmet            |        132 |      140 |       8 |
+
+| 68 Via Centrale | Roberta Menchu       | Winfield Bat             |         97 |      100 |       3 |
+
+| 6921 King Way   | Ben Biri             | Alexeyer Pro Lifting Bar |         70 |       70 |       0 |
+
+| 6921 King Way   | Ben Biri             | New Air Pump             |         35 |       35 |       0 |
+
+| 6921 King Way   | Ben Biri             | Pro Curling Bar          |         65 |       70 |       5 |
+
+| 6921 King Way   | Ben Biri             | Prostar 20 Pound Weight  |         61 |       70 |       9 |
+
+| 86 Chu Street   | Antoinette Catchpole | Himalaya Tires           |        135 |      140 |       5 |
+
+| 86 Chu Street   | Antoinette Catchpole | Safe-T Helmet            |        250 |      250 |       0 |
+
++-----------------+----------------------+--------------------------+------------+----------+---------+
+
+ 
+
+Ćwiczenie 5
+
+Utworzyć tabelę o nazwie price_category. W tabeli tej powinny pojawić się następujące rekordy (musisz je sam wprowadzić):
+
+mysql> DROP TABLE IF EXISTS price_category;
+
+ 
+
+mysql> CREATE TABLE price_category(
+
+    -> id INTEGER PRIMARY KEY,
+
+    -> name VARCHAR(20),
+
+    -> price_min DECIMAL(10,2),
+
+    -> price_max DECIMAL(10,2));
+
+ 
+
+mysql> INSERT INTO price_category VALUES(1, 'Low Summer',0,100);
+
+mysql> INSERT INTO price_category VALUES(2, 'Medium Summer',101,500);
+
+mysql> INSERT INTO price_category VALUES(3, 'High Summer',501,2000);
+
+mysql> INSERT INTO price_category VALUES(4, 'Low Winter',0,50);
+
+mysql> INSERT INTO price_category VALUES(5, 'Medium Winter',51,300);
+
+mysql> INSERT INTO price_category VALUES(6, 'High Winter',301,2000);
+
+ 
+
+mysql> SELECT id, name, price_min, price_max FROM price_category;
+
++----+---------------+-----------+-----------+
+
+| id | name          | price_min | price_max |
+
++----+---------------+-----------+-----------+
+
+|  1 | Low Summer    |      0.00 |    100.00 |
+
+|  2 | Medium Summer |    101.00 |    500.00 |
+
+|  3 | High Summer   |    501.00 |   2000.00 |
+
+|  4 | Low Winter    |      0.00 |     50.00 |
+
+|  5 | Medium Winter |     51.00 |    300.00 |
+
+|  6 | High Winter   |    301.00 |   2000.00 |
+
++----+---------------+-----------+-----------+
+
+ 
+
+Ich sens jest następujący: ustalamy odpowiednie przedziały cenowe i przypisujemy im nazwy. Ustaliliśmy więc 6 takich przedziałów - 3 dla sezonu letniego i 3 dla zimowego. Dane z tej tabeli wykorzystamy do oceny w jakich przedziałach cenowych mieszczą się poszczególne produkty (tabela product). Następnie należy wykonać zapytanie, które nazywa się połączenie nierównościowe (ang. thetajoin). Złączamy ze sobą relacje, które nie są powiązane ze sobą więzami integralnościowymi. W poniższym przykładzie wyświetlono listę produktów oraz na bazie tabeli price category sprawdzono, w jakich przedziałach cenowych mieszczą się ceny poszczególnych produktów.  Początek 66 wierszowego wyniku wygląda następująco:
+
++--------------------------+------------------+-------------------+---------+
+
+| Nazwa produktu           | Nazwa przedzialu | Przedzial         | Cena    |
+
++--------------------------+------------------+-------------------+---------+
+
+| Ace Ski Boot             | Medium Summer    | 101.00 -- 500.00  |  200.00 |
+
+| Ace Ski Boot             | Medium Winter    | 51.00 -- 300.00   |  200.00 |
+
+| Ace Ski Pole             | Low Winter       | 0.00 -- 50.00     |   21.95 |
+
+| Ace Ski Pole             | Low Summer       | 0.00 -- 100.00    |   21.95 |
+
+| Alexeyer Pro Lifting Bar | Low Summer       | 0.00 -- 100.00    |   65.00 |
+
+| Alexeyer Pro Lifting Bar | Medium Winter    | 51.00 -- 300.00   |   65.00 |
+
+| Alomar Glove             | Low Summer       | 0.00 -- 100.00    |   75.00 |
+
+| Alomar Glove             | Medium Winter    | 51.00 -- 300.00   |   75.00 |
+
+| Black Hawk Elbow Pads    | Low Winter       | 0.00 -- 50.00     |    8.00 |
+
+| Black Hawk Elbow Pads    | Low Summer       | 0.00 -- 100.00    |    8.00 |
+
+| Black Hawk Knee Pads     | Low Summer       | 0.00 -- 100.00    |    9.00 |
+
+| Black Hawk Knee Pads     | Low Winter       | 0.00 -- 50.00     |    9.00 |
+
+| Bunny Boot               | Medium Winter    | 51.00 -- 300.00   |  150.00 |
+
+| Bunny Boot               | Medium Summer    | 101.00 -- 500.00  |  150.00 |
+
+| Bunny Ski Pole           | Low Summer       | 0.00 -- 100.00    |   16.25 |
+
+| Bunny Ski Pole           | Low Winter       | 0.00 -- 50.00     |   16.25 |
+
+| Cabrera Bat              | Low Summer       | 0.00 -- 100.00    |   45.00 |
+
+| Cabrera Bat              | Low Winter       | 0.00 -- 50.00     |   45.00 |
+
+| Chapman Helmet           | Low Winter       | 0.00 -- 50.00     |   22.89 |
+
+| Chapman Helmet           | Low Summer       | 0.00 -- 100.00    |   22.89 |
+
+| Grand Prix Bicycle       | High Summer      | 501.00 -- 2000.00 | 1669.00 |
+
+| Grand Prix Bicycle       | High Winter      | 301.00 -- 2000.00 | 1669.00 |
+
+| Grand Prix Bicycle Tires | Low Winter       | 0.00 -- 50.00     |   16.00 |
+
+| Grand Prix Bicycle Tires | Low Summer       | 0.00 -- 100.00    |   16.00 |
+
+| Griffey Glove            | Low Summer       | 0.00 -- 100.00    |   80.00 |
+
+| Griffey Glove            | Medium Winter    | 51.00 -- 300.00   |   80.00 |
+
+| Himalaya Bicycle         | High Summer      | 501.00 -- 2000.00 |  582.00 |
+
+| Himalaya Bicycle         | High Winter      | 301.00 -- 2000.00 |  582.00 |
+
+| Himalaya Tires           | Low Summer       | 0.00 -- 100.00    |   18.25 |
+
+| Himalaya Tires           | Low Winter       | 0.00 -- 50.00     |   18.25 |
+
+| Junior Soccer Ball       | Low Summer       | 0.00 -- 100.00    |   11.00 |
+
+| Junior Soccer Ball       | Low Winter       | 0.00 -- 50.00     |   11.00 |
+
+| Major League Baseball    | Low Summer       | 0.00 -- 100.00    |    4.29 |
+
+| Major League Baseball    | Low Winter       | 0.00 -- 50.00     |    4.29 |
+
+| New Air Pump             | Low Summer       | 0.00 -- 100.00    |   20.00 |
+
+| New Air Pump             | Low Winter       | 0.00 -- 50.00     |   20.00 |
+
+| Pro Curling Bar          | Low Summer       | 0.00 -- 100.00    |   50.00 |
+
+| Pro Curling Bar          | Low Winter       | 0.00 -- 50.00     |   50.00 |
+
+| Pro Ski Boot             | Medium Summer    | 101.00 -- 500.00  |  410.00 |
+
+| Pro Ski Boot             | High Winter      | 301.00 -- 2000.00 |  410.00 |
+
+| Pro Ski Pole             | Low Summer       | 0.00 -- 100.00    |   40.95 |
+
+| Pro Ski Pole             | Low Winter       | 0.00 -- 50.00     |   40.95 |
+
+| Prostar 10 Pound Weight  | Low Winter       | 0.00 -- 50.00     |    8.00 |
+
+| Prostar 10 Pound Weight  | Low Summer       | 0.00 -- 100.00    |    8.00 |
+
+| Prostar 100 Pound Weight | Low Summer       | 0.00 -- 100.00    |   45.00 |
+
+| Prostar 100 Pound Weight | Low Winter       | 0.00 -- 50.00     |   45.00 |
+
+| Prostar 20 Pound Weight  | Low Summer       | 0.00 -- 100.00    |   12.00 |
+
+| Prostar 20 Pound Weight  | Low Winter       | 0.00 -- 50.00     |   12.00 |
+
+| Prostar 50 Pound Weight  | Low Summer       | 0.00 -- 100.00    |   25.00 |
+
+| Prostar 50 Pound Weight  | Low Winter       | 0.00 -- 50.00     |   25.00 |
+
+| Prostar 80 Pound Weight  | Low Winter       | 0.00 -- 50.00     |   35.00 |
+
+| Prostar 80 Pound Weight  | Low Summer       | 0.00 -- 100.00    |   35.00 |
+
+| Puckett Bat              | Low Summer       | 0.00 -- 100.00    |   47.00 |
+
+| Puckett Bat              | Low Winter       | 0.00 -- 50.00     |   47.00 |
+
+| Safe-T Helmet            | Low Summer       | 0.00 -- 100.00    |   60.00 |
+
+| Safe-T Helmet            | Medium Winter    | 51.00 -- 300.00   |   60.00 |
+
+| Slaker Water Bottle      | Low Winter       | 0.00 -- 50.00     |    7.00 |
+
+| Slaker Water Bottle      | Low Summer       | 0.00 -- 100.00    |    7.00 |
+
+| Steinbach Glove          | Medium Winter    | 51.00 -- 300.00   |   80.00 |
+
+| Steinbach Glove          | Low Summer       | 0.00 -- 100.00    |   80.00 |
+
+| Winfield Bat             | Low Winter       | 0.00 -- 50.00     |   50.00 |
+
+| Winfield Bat             | Low Summer       | 0.00 -- 100.00    |   50.00 |
+
+| World Cup Net            | Medium Summer    | 101.00 -- 500.00  |  123.00 |
+
+| World Cup Net            | Medium Winter    | 51.00 -- 300.00   |  123.00 |
+
+| World Cup Soccer Ball    | Low Winter       | 0.00 -- 50.00     |   28.00 |
+
+| World Cup Soccer Ball    | Low Summer       | 0.00 -- 100.00    |   28.00 |
+
++--------------------------+------------------+-------------------+---------+
+
+66 rows in set (0.06 sec)
+
+ 
+
+ 
+
+Ćwiczenie 6
+
+Z tabeli emp wyświetlić dane o pracownikach (nazwisko pracownika, nazwisko bezpośredniego przełożonego). Należy zauważyć, że w tabeli emp na kolumnie manager id założony jest klucz obcy z referencją do klucza głównego id w tej samej tabeli. W kolumnie manager id wpisany jest identyfikator „szefa” danego pracownika. Zwróćmy uwagę, że pole manager id dla pracownika na stanowisku President ma wartość NULL, co oznacza, że nie ma on swojego zwierzchnika. Widać to wyraźnie, gdy wyświetlimy odpowiednie kolumny z tabeli emp:
+
+ 
+
+mysql> SELECT last_name, id, manager_id FROM emp;
+
++--------------+----+------------+
+
+| last_name    | id | manager_id |
+
++--------------+----+------------+
+
+| Velasquez    |  1 |       NULL |
+
+| Ngao         |  2 |          1 |
+
+| Nagayama     |  3 |          1 |
+
+| Quick-To-See |  4 |          1 |
+
+| Ropeburn     |  5 |          1 |
+
+| Urguhart     |  6 |          2 |
+
+| Menchu       |  7 |          2 |
+
+| Biri         |  8 |          2 |
+
+| Catchpole    |  9 |          2 |
+
+| Havel        | 10 |          2 |
+
+| Magee        | 11 |          3 |
+
+| Giljum       | 12 |          3 |
+
+| Sedeghi      | 13 |          3 |
+
+| Nguyen       | 14 |          3 |
+
+| Dumas        | 15 |          3 |
+
+| Maduro       | 16 |          6 |
+
+| Smith        | 17 |          6 |
+
+| Nozaki       | 18 |          7 |
+
+| Patel        | 19 |          7 |
+
+| Newman       | 20 |          8 |
+
+| Markarian    | 21 |          8 |
+
+| Chang        | 22 |          9 |
+
+| Patel        | 23 |          9 |
+
+| Dancs        | 24 |         10 |
+
+| Schwartz     | 25 |         10 |
+
++--------------+----+------------+
+
+25 rows in set (0.00 sec)
+
+ 
+
+Oczekiwany wynik pokazano poniżej:
+
++--------------+----------------------+-----------+-------------------+
+
+| last_name    | name                 | last_name | name              |
+
++--------------+----------------------+-----------+-------------------+
+
+| Nguyen       | Sales Representative | Nagayama  | VP, Sales         |
+
+| Sedeghi      | Sales Representative | Nagayama  | VP, Sales         |
+
+| Giljum       | Sales Representative | Nagayama  | VP, Sales         |
+
+| Magee        | Sales Representative | Nagayama  | VP, Sales         |
+
+| Dumas        | Sales Representative | Nagayama  | VP, Sales         |
+
+| Newman       | Stock Clerk          | Biri      | Warehouse Manager |
+
+| Patel        | Stock Clerk          | Menchu    | Warehouse Manager |
+
+| Markarian    | Stock Clerk          | Biri      | Warehouse Manager |
+
+| Smith        | Stock Clerk          | Urguhart  | Warehouse Manager |
+
+| Chang        | Stock Clerk          | Catchpole | Warehouse Manager |
+
+| Patel        | Stock Clerk          | Catchpole | Warehouse Manager |
+
+| Dancs        | Stock Clerk          | Havel     | Warehouse Manager |
+
+| Maduro       | Stock Clerk          | Urguhart  | Warehouse Manager |
+
+| Nozaki       | Stock Clerk          | Menchu    | Warehouse Manager |
+
+| Schwartz     | Stock Clerk          | Havel     | Warehouse Manager |
+
+| Ropeburn     | VP, Administration   | Velasquez | President         |
+
+| Quick-To-See | VP, Finance          | Velasquez | President         |
+
+| Ngao         | VP, Operations       | Velasquez | President         |
+
+| Nagayama     | VP, Sales            | Velasquez | President         |
+
+| Menchu       | Warehouse Manager    | Ngao      | VP, Operations    |
+
+| Biri         | Warehouse Manager    | Ngao      | VP, Operations    |
+
+| Catchpole    | Warehouse Manager    | Ngao      | VP, Operations    |
+
+| Havel        | Warehouse Manager    | Ngao      | VP, Operations    |
+
+| Urguhart     | Warehouse Manager    | Ngao      | VP, Operations    |
+
++--------------+----------------------+-----------+-------------------+
+
+ 
+
+Ćwiczenie 7
+
+Z tabeli ord w rekordach, gdzie id < 100 usunąć dane o „opiekunach” tych zamówień (użyć polecenia UPDATE. O jaką kolumnę chodzi?). Następnie należy wyświetlić numery zamówień, daty ich złożenia oraz imię i nazwisko opiekuna danego zamówienia. Użyć operator LEFT OUTER JOIN. Do uzyskania napisów --brak danych-- użyć funkcji IFNULL. Jako wynik powinniśmy otrzymać:
+
+ 
+
++-----+------------+-----------------+---------------+
+
+| id  | Data       | Imie            | Nazwisko      |
+
++-----+------------+-----------------+---------------+
+
+|  97 | 28-08-1992 | --brak danych-- | --brak danych |
+
+|  98 | 31-08-1992 | --brak danych-- | --brak danych |
+
+|  99 | 31-08-1992 | --brak danych-- | --brak danych |
+
+| 100 | 31-08-1992 | Colin           | Magee         |
+
+| 101 | 31-08-1992 | Mai             | Nguyen        |
+
+| 102 | 01-09-1992 | Andre           | Dumas         |
+
+| 103 | 02-09-1992 | Andre           | Dumas         |
+
+| 104 | 03-09-1992 | Andre           | Dumas         |
+
+| 105 | 04-09-1992 | Colin           | Magee         |
+
+| 106 | 07-09-1992 | Henry           | Giljum        |
+
+| 107 | 07-09-1992 | Andre           | Dumas         |
+
+| 108 | 07-09-1992 | Yasmin          | Sedeghi       |
+
+| 109 | 08-09-1992 | Colin           | Magee         |
+
+| 110 | 09-09-1992 | Colin           | Magee         |
+
+| 111 | 09-09-1992 | Colin           | Magee         |
+
+| 112 | 31-08-1992 | Henry           | Giljum        |
+
++-----+------------+-----------------+---------------+
+
+16 rows in set (0.00 sec)
+
+ 
+
+Dane z tabeli ord po modyfikacji wyglądają następująco:
+
+ 
+
+mysql> SELECT id, sales_rep_id FROM ord ORDER BY id;
+
++-----+--------------+
+
+| id  | sales_rep_id |
+
++-----+--------------+
+
+|  97 |         NULL |
+
+|  98 |         NULL |
+
+|  99 |         NULL |
+
+| 100 |           11 |
+
+| 101 |           14 |
+
+| 102 |           15 |
+
+| 103 |           15 |
+
+| 104 |           15 |
+
+| 105 |           11 |
+
+| 106 |           12 |
+
+| 107 |           15 |
+
+| 108 |           13 |
+
+| 109 |           11 |
+
+| 110 |           11 |
+
+| 111 |           11 |
+
+| 112 |           12 |
+
++-----+--------------+
+
+16 rows in set (0.00 sec)
+
+ 
+
+Przed rozpoczęciem kolejnego ćwiczenia nie zapomnij przywrócić tabeli ord do pierwotnego stanu.
+
+ 
+
+mysql> SELECT id, sales_rep_id FROM ord ORDER BY id;
+
++-----+--------------+
+
+| id  | sales_rep_id |
+
++-----+--------------+
+
+|  97 |           12 |
+
+|  98 |           14 |
+
+|  99 |           14 |
+
+| 100 |           11 |
+
+| 101 |           14 |
+
+| 102 |           15 |
+
+| 103 |           15 |
+
+| 104 |           15 |
+
+| 105 |           11 |
+
+| 106 |           12 |
+
+| 107 |           15 |
+
+| 108 |           13 |
+
+| 109 |           11 |
+
+| 110 |           11 |
+
+| 111 |           11 |
+
+| 112 |           12 |
+
++-----+--------------+
+
+16 rows in set (0.00 sec)
+
+ 
+
+Ćwiczenie 8
+
+Wyświetlić dane o pracownikach (tabela emp) oraz zamówieniach (numer id oraz data złożenia zamówienia), którymi się opiekują. Pamiętajmy o tym, że jeden pracownik może opiekować się więcej niż jednym zamówieniem. Jak należy interpretować brak danych w polach id oraz date ordered? Jak należy interpretować rekordy z tymi samymi nazwiskami? Jako wynik powinniśmy otrzymać:
+
++------------+--------------+------+--------------+
+
+| first_name | last_name    | id   | date_ordered |
+
++------------+--------------+------+--------------+
+
+| Ben        | Biri         | NULL | NULL         |
+
+| Antoinette | Catchpole    | NULL | NULL         |
+
+| Eddie      | Chang        | NULL | NULL         |
+
+| Bela       | Dancs        | NULL | NULL         |
+
+| Andre      | Dumas        |  102 | 01-09-1992   |
+
+| Andre      | Dumas        |  103 | 02-09-1992   |
+
+| Andre      | Dumas        |  104 | 03-09-1992   |
+
+| Andre      | Dumas        |  107 | 07-09-1992   |
+
+| Henry      | Giljum       |  106 | 07-09-1992   |
+
+| Henry      | Giljum       |   97 | 28-08-1992   |
+
+| Henry      | Giljum       |  112 | 31-08-1992   |
+
+| Marta      | Havel        | NULL | NULL         |
+
+| Elena      | Maduro       | NULL | NULL         |
+
+| Colin      | Magee        |  105 | 04-09-1992   |
+
+| Colin      | Magee        |  109 | 08-09-1992   |
+
+| Colin      | Magee        |  110 | 09-09-1992   |
+
+| Colin      | Magee        |  111 | 09-09-1992   |
+
+| Colin      | Magee        |  100 | 31-08-1992   |
+
+| Alexander  | Markarian    | NULL | NULL         |
+
+| Roberta    | Menchu       | NULL | NULL         |
+
+| Midori     | Nagayama     | NULL | NULL         |
+
+| Chad       | Newman       | NULL | NULL         |
+
+| LaDoris    | Ngao         | NULL | NULL         |
+
+| Mai        | Nguyen       |   99 | 31-08-1992   |
+
+| Mai        | Nguyen       |  101 | 31-08-1992   |
+
+| Mai        | Nguyen       |   98 | 31-08-1992   |
+
+| Akira      | Nozaki       | NULL | NULL         |
+
+| Vikram     | Patel        | NULL | NULL         |
+
+| Radha      | Patel        | NULL | NULL         |
+
+| Mark       | Quick-To-See | NULL | NULL         |
+
+| Audry      | Ropeburn     | NULL | NULL         |
+
+| Sylvie     | Schwartz     | NULL | NULL         |
+
+| Yasmin     | Sedeghi      |  108 | 07-09-1992   |
+
+| George     | Smith        | NULL | NULL         |
+
+| Molly      | Urguhart     | NULL | NULL         |
+
+| Carmen     | Velasquez    | NULL | NULL         |
+
++------------+--------------+------+--------------+
+
+36 rows in set (0.03 sec)
+
+ 
+
+Ćwiczenie 9
+
+Połączyć w jeden zbiorczy wynik dane z tabel dept oraz region. Użyć operatora UNION. Następnie zamienić UNION na UNION ALL i opisać jakie zaszły zmiany. Jako wynik powinniśmy otrzymać:
+
+ 
+
+ 
+
+Oraz
+
+ 
+
+ 
+
+Ćwiczenie 10
+
+Połączyć w jeden zbiorczy wynik nazwiska pracowników z tabeli emp oraz nazwy klientów z tabeli customer. Użyć operatora UNION oraz funkcji CONCAT do odpowiedniego sformatowania wyjścia. Posortować wynik od A do Z. Jako wynik powinniśmy otrzymać:
+
+ 
+
+ 
+
+Ćwiczenie 11
+
+Zmodyfikować zapytanie z poprzedniego ćwiczenia, tak aby najpierw pojawiły się nazwiska pracowników a potem nazwy klientów. Dane powinny być posortowane od A do Z (oddzielnie pracownicy i oddzielnie klienci). Należy użyć pewnego triku, polegającego na umiejętnym użyciu tzw. pseudokolumny i następnie posortowaniu wyniku podług niej. Jako wynik powinniśmy otrzymać:
+
+ 
+
+ 
+
+ 
+
+Literatura
+
+Ćwiczenie opracowane na podstawie materiałów przedstawionych na stronie http://www.uz.zgora.pl/~agramack/
+
+1. Lech Banachowski (tłum.). SQL. Język relacyjnych baz danych. WNT Warszawa, 1995.
+
+2.Paul Dubios. MySQL. Podręcznik administratora. Wydawnictwo HELION, 2005.
+
+3.MySQL 5.0 Reference Manual, 2005. http://dev.mysql.com/doc/
+
+4.Richard Stones and Neil Matthew. Od podstaw. Bazy danych i MySQL. Wydawnictwo HELION, 2003.
+
+5.Luke Welling and Laura Thomson. MySQL. Podstawy. Wydawnictwo HELION, 2005.
+
+ 
+
